@@ -16,5 +16,5 @@ def read_root():
                 "student_id": "71669"
             }
         ],
-        "status": "App is running perfectly for both developers!"
+        "status": "GitOps Pipeline is fully automated!"
     }

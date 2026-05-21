@@ -31,3 +31,14 @@ jobs:
           tags: |
             ghcr.io/nikitaevchuk/gitops-app:latest
             ghcr.io/nikitaevchuk/gitops-app:${{ github.sha }}
+
+      - name: Update Infra Repository
+        run: |
+          git clone https://${{ secrets.PAT }}@github.com/NikitaEvchuk/gitops-infra.git
+          cd gitops-infra
+          sed -i 's|image: ghcr.io/nikitaevchuk/gitops-app:.*|image: ghcr.io/nikitaevchuk/gitops-app:${{ github.sha }}|' deployment.yaml
+          git config user.name "GitHub Actions CI"
+          git config user.email "actions@github.com"
+          git add deployment.yaml
+          git commit -m "Auto-update image tag to ${{ github.sha }}"
+          git push
